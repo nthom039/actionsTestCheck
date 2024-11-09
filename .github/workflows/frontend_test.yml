@@ -29,21 +29,6 @@ jobs:
         run: npm install
         working-directory: ./front end/Ransomware Hunter
 
-      - name: Run Vitest tests with JSON output
-        run: npm run test -- --reporter=json
+      - name: Run Vitest tests
+        run: npm run test
         working-directory: ./front end/Ransomware Hunter
-
-      - name: Check pass rate
-        run: |
-          passed=$(jq '[.testResults[] | select(.status == "pass")] | length' vitest-results.json)
-          total=$(jq '.testResults | length' vitest-results.json)
-          pass_rate=(echo"scale=2;(echo "scale=2; passed / $total * 100" | bc)
-          echo "Pass rate: $pass_rate%"
-          if (( (echo"(echo "pass_rate < 80" | bc -l) )); then
-            echo "Pass rate is below 80%. Failing the job."
-            exit 1
-          else
-            echo "Pass rate meets the threshold."
-          fi
-        working-directory: ./front end/Ransomware Hunter
-        shell: bash

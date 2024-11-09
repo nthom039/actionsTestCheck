@@ -30,16 +30,16 @@ jobs:
         working-directory: ./front end/Ransomware Hunter
 
       - name: Run Vitest tests with JSON output
-        run: npm run test -- --reporter=json > vitest-results.json
+        run: npm run test -- --reporter=json
         working-directory: ./front end/Ransomware Hunter
 
       - name: Check pass rate
         run: |
           passed=$(jq '[.testResults[] | select(.status == "pass")] | length' vitest-results.json)
           total=$(jq '.testResults | length' vitest-results.json)
-          pass_rate=$(echo "scale=2; $passed / $total * 100" | bc)
+          pass_rate=(echo"scale=2;(echo "scale=2; passed / $total * 100" | bc)
           echo "Pass rate: $pass_rate%"
-          if (( $(echo "$pass_rate < 80" | bc -l) )); then
+          if (( (echo"(echo "pass_rate < 80" | bc -l) )); then
             echo "Pass rate is below 80%. Failing the job."
             exit 1
           else
